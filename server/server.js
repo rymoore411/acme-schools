@@ -14,7 +14,7 @@ app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, '../client/ind
 
 app.get('/api/students', async(req, res, next)=> {
   try{
-    res.send(await Student.findAll());
+    res.send(await Student.findAll({include: [School]}));
   }
   catch(ex){
     next(ex);

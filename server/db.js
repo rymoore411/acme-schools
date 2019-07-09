@@ -69,22 +69,27 @@ const schools = [{
 const syncAndSeed = async() => {
   try{
   await conn.sync({force: true});
-  await Promise.all(schools.map(school => School.create({
+  const [calPoly, harvard, mit] = await Promise.all(schools.map(school => School.create({
     name: school.name,
     imageURL: school.imageURL
   })));
 
-  await Promise.all(students.map(student => Student.create({
+  const [ryan, jason, matthew] = await Promise.all(students.map(student => Student.create({
     firstName: student.firstName,
     lastName: student.lastName,
     email: student.email,
     GPA: student.gpa
   })));
+
+ryan.schoolId = calPoly.id;
+jason.schoolId = harvard.id;
+matthew.schoolId = mit.id;
+await Promise.all(ryan.save(), jason.save(), matthew.save());
 }
+
 catch(err){
   console.log(err);
 }
-
 
 }
 
