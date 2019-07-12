@@ -84,7 +84,7 @@ const syncAndSeed = async() => {
 ryan.schoolId = calPoly.id;
 jason.schoolId = harvard.id;
 matthew.schoolId = mit.id;
-await Promise.all(ryan.save(), jason.save(), matthew.save());
+//await Promise.all(ryan.save(), jason.save(), matthew.save());
 }
 
 catch(err){
