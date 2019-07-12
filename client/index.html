@@ -9,82 +9,145 @@
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.0/react-router-dom.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.1.0/react-redux.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.3.0/redux-thunk.js'></script>
   </head>
   <body>
     <div id='root'></div>
     <script type='text/babel'>
       const {HashRouter, Route, Link} = ReactRouterDOM;
+      const {Provider, connect} = ReactRedux;
+
+      const SET_SCHOOLS = 'SET_SCHOOLS';
+      const SET_STUDENTS = 'SET_STUDENTS';
 
       const initialState = { schools: [], students: []};
 
-      const store = Redux.createStore((state = [], action)=>{
+      const store = Redux.createStore((state = initialState, action)=>{
         switch(action.type){
-          case 'SET_SCHOOLS':
-            state = action.schools;
+          case SET_SCHOOLS:
+            state.schools = action.schools;
             break
-          case 'SET_STUDENTS':
-            state = action.students;
+          case SET_STUDENTS:
+            state.students = action.students;
             break
         }
         return state;
-      });
+      }, Redux.applyMiddleware(ReduxThunk.default));
 
-      const start = async()=> {
-        const schoolRes = await axios.get('/api/schools');
-        store.dispatch({type: 'SET_SCHOOLS', schools: schoolRes.data});
-        const studentRes  = await axios.get('/api/students');
-        store.dispatch({type: 'SET_STUDENTS', students: studentRes.data});
-      }
-
-      start();
-
-      class Nav extends React.Component {
-        constructor(){
-          super();
-          this.state = {
-            schools: store.getState(),
-            students: store.getState()
-          }
-        }
-        componentDidMount(){
-          store.subscribe(()=>{
-            this.setState({schools: store.getState(), students: store.getState()});
-
-          })
-        }
-
-        render(){
-          const {schools, students} = this.state;
-          console.log(schools);
-          const links = [
-            {text: 'Home', to: '/'},
-            {text: `Schools (${ schools.length })`, to: '/schools'},
-            {text: `Students (${ students.length })`, to: '/students'},
-            {text: 'Most Popular', to: '/schools/:id?'},
-            {text: 'Top School', to: '/schools/:id??'}
-          ];
-
-          return(
-            <div id='nav'>
-              {
-                links.map((link, idx)=> <Link key={ idx } to={ link.to }>{ link.text }</Link>)
-              }
-            </div>
-          );
+      const _setSchools = (schools)=> {
+        return {
+          type: SET_SCHOOLS,
+          schools
         }
       }
+
+      const _setStudents = (students)=> {
+        return {
+          type: SET_STUDENTS,
+          students
+        }
+      }
+
+      const setSchools = ()=>{
+        return async (dispatch) => {
+          const response = await axios.get('/api/schools');
+          dispatch(_setSchools(response.data));
+        }
+      }
+
+      const setStudents = ()=>{
+        return async (dispatch) => {
+          const response = await axios.get('/api/students');
+          dispatch(_setStudents(response.data));
+        }
+      }
+
+      const _Nav = ({ schools, students})=> {
+        return(
+          <div>
+            <Link to='/'>Home</Link>
+            <Link to='/schools'>Schools ({schools.length})</Link>
+            <Link to='/students'>Students ({students.length})</Link>
+          </div>
+        );
+      }
+
+      const Nav = connect((state)=> {
+        return {
+          schools: state.schools,
+          students: state.students
+        }
+      })(_Nav);
+
+      const _Schools = ({ schools })=> {
+        return(
+          <ul>
+            {
+              schools.map(school => <li key={school.id}>{school.name}</li>)
+            }
+          </ul>
+        )
+      }
+
+      const Schools = connect(( state )=>{
+        return {
+          schools: state.schools
+        }
+      })(_Schools);
+
+      const _Students = ({ students })=> {
+        return(
+          <ul>
+            {
+              students.map(student => <li key={student.id}>{student.name}</li>)
+            }
+          </ul>
+        )
+      }
+
+      const Students = connect(( state )=>{
+        return {
+          students: state.students
+        }
+      })(_Students);
+
+
 
       const Home = ()=> <h2>Home</h2>
 
+      class _Routes extends React.Component {
+        componentDidMount(){
+          this.props.load();
+        }
+        render(){
+          return (
+            <HashRouter>
+              <Route component = { Nav } />
+              <Route path = '/' exact component = { Home } />
+              <Route path = '/schools' component = { Schools } />
+              <Route path = '/students' component = { Students } />
+            </HashRouter>
+          )
+        }
+      }
+
+      const Routes = connect(null, (dispatch)=> {
+        return {
+          load: ()=> dispatch(setSchools(), setStudents())
+        };
+      })(_Routes);
+
       const App = ()=> {
         return(
-          <HashRouter>
-            <Route component = { Nav } />
-            <Route path = '/' exact component = { Home } />
-          </HashRouter>
-        )
-
-      }
+          <Provider store = { store }>
+            <HashRouter>
+              <Route component = { Nav } />
+              <Route path = '/' exact component = { Home } />
+            </HashRouter>
+          </Provider>
+        );
+      };
 
       const root = document.querySelector('#root');
       ReactDOM.render(<App />, root);
