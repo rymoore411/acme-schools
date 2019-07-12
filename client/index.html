@@ -52,6 +52,7 @@
       const setSchools = ()=>{
         return async (dispatch) => {
           const response = await axios.get('/api/schools');
+          console.log(response.data);
           dispatch(_setSchools(response.data));
         }
       }
@@ -59,6 +60,7 @@
       const setStudents = ()=>{
         return async (dispatch) => {
           const response = await axios.get('/api/students');
+          console.log(response.data);
           dispatch(_setStudents(response.data));
         }
       }
@@ -118,7 +120,8 @@
 
       class _Routes extends React.Component {
         componentDidMount(){
-          this.props.load();
+          this.props.loadSchools();
+          this.props.loadStudents();
         }
         render(){
           return (
@@ -134,17 +137,15 @@
 
       const Routes = connect(null, (dispatch)=> {
         return {
-          load: ()=> dispatch(setSchools(), setStudents())
+          loadSchools: ()=> dispatch(setSchools()),
+          loadStudents: ()=> dispatch(setStudents())
         };
       })(_Routes);
 
       const App = ()=> {
         return(
           <Provider store = { store }>
-            <HashRouter>
-              <Route component = { Nav } />
-              <Route path = '/' exact component = { Home } />
-            </HashRouter>
+            <Routes />
           </Provider>
         );
       };
