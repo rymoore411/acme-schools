@@ -21,16 +21,16 @@
       const SET_SCHOOLS = 'SET_SCHOOLS';
       const SET_STUDENTS = 'SET_STUDENTS';
 
-      const initialState = { schools: [], students: []};
+      const initialState = { schools: [], students: [] };
 
       const store = Redux.createStore((state = initialState, action)=>{
         switch(action.type){
           case SET_SCHOOLS:
             state.schools = action.schools;
-            break
+            break;
           case SET_STUDENTS:
             state.students = action.students;
-            break
+            break;
         }
         return state;
       }, Redux.applyMiddleware(ReduxThunk.default));
@@ -52,7 +52,6 @@
       const setSchools = ()=>{
         return async (dispatch) => {
           const response = await axios.get('/api/schools');
-          console.log(response.data);
           dispatch(_setSchools(response.data));
         }
       }
@@ -60,7 +59,6 @@
       const setStudents = ()=>{
         return async (dispatch) => {
           const response = await axios.get('/api/students');
-          console.log(response.data);
           dispatch(_setStudents(response.data));
         }
       }
@@ -75,11 +73,12 @@
         );
       }
 
-      const Nav = connect((state)=> {
+      const Nav = connect(( state )=> {
+        console.log(state);
         return {
           schools: state.schools,
           students: state.students
-        }
+        };
       })(_Nav);
 
       const _Schools = ({ schools })=> {
@@ -93,16 +92,18 @@
       }
 
       const Schools = connect(( state )=>{
+        console.log(state);
         return {
           schools: state.schools
         }
       })(_Schools);
 
       const _Students = ({ students })=> {
+
         return(
           <ul>
             {
-              students.map(student => <li key={student.id}>{student.name}</li>)
+              students.map(student => <li key={student.id}>{student.firstName}</li>)
             }
           </ul>
         )
@@ -131,7 +132,7 @@
               <Route path = '/schools' component = { Schools } />
               <Route path = '/students' component = { Students } />
             </HashRouter>
-          )
+          );
         }
       }
 
