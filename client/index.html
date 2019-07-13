@@ -26,10 +26,10 @@
       const store = Redux.createStore((state = initialState, action)=>{
         switch(action.type){
           case SET_SCHOOLS:
-            state.schools = action.schools;
+            state = {...state, schools: action.schools};
             break;
           case SET_STUDENTS:
-            state.students = action.students;
+            state = {...state, students: action.students};
             break;
         }
         return state;
@@ -74,7 +74,7 @@
       }
 
       const Nav = connect(( state )=> {
-        console.log(state);
+        console.log(state.students);
         return {
           schools: state.schools,
           students: state.students
