@@ -21,19 +21,30 @@
       const SET_SCHOOLS = 'SET_SCHOOLS';
       const SET_STUDENTS = 'SET_STUDENTS';
 
-      const initialState = { schools: [], students: [] };
+      // const initialState = { schools: [], students: [] };
 
-      const store = Redux.createStore((state = initialState, action)=>{
+      const schoolsReducer = (state = [], action)=> {
         switch(action.type){
           case SET_SCHOOLS:
-            state = {...state, schools: action.schools};
-            break;
-          case SET_STUDENTS:
-            state = {...state, students: action.students};
-            break;
+            return action.schools;
         }
         return state;
-      }, Redux.applyMiddleware(ReduxThunk.default));
+      }
+
+      const studentsReducer = (state = [], action)=> {
+        switch(action.type){
+          case SET_STUDENTS:
+            return action.students;
+        }
+        return state;
+      }
+
+      const reducer = Redux.combineReducers({
+        schools: schoolsReducer,
+        students: studentsReducer
+      });
+
+      const store = Redux.createStore(reducer, Redux.applyMiddleware(ReduxThunk.default));
 
       const _setSchools = (schools)=> {
         return {
@@ -74,7 +85,6 @@
       }
 
       const Nav = connect(( state )=> {
-        console.log(state.students);
         return {
           schools: state.schools,
           students: state.students
@@ -92,7 +102,6 @@
       }
 
       const Schools = connect(( state )=>{
-        console.log(state);
         return {
           schools: state.schools
         }

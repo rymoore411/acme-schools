@@ -81,10 +81,11 @@ const syncAndSeed = async() => {
     GPA: student.gpa
   })));
 
-ryan.schoolId = calPoly.id;
-jason.schoolId = harvard.id;
-matthew.schoolId = mit.id;
-//await Promise.all(ryan.save(), jason.save(), matthew.save());
+// ryan.schoolId = calPoly.id;
+// jason.schoolId = harvard.id;
+// matthew.schoolId = mit.id;
+// assign on front end or save here
+
 }
 
 catch(err){

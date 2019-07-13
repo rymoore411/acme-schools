@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, ()=>console.log(`listening on port ${port}`));
 
-app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, '../client/index.html')));
+app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, './index.html')));
 
 app.get('/api/students', async(req, res, next)=> {
   try{
