@@ -1,6 +1,7 @@
 
+import React from 'react';
 import {connect} from 'react-redux';
-import { Link } from 'react-dom';
+import { Link } from 'react-router-dom';
 
 const _Nav = ({ schools, students})=> {
   return(
@@ -12,9 +13,12 @@ const _Nav = ({ schools, students})=> {
   );
 }
 
-const Nav = connect(( state )=> {
+const Nav = (( state )=> {
   return {
     schools: state.schools,
     students: state.students
   };
-})(_Nav);
+});
+
+
+export default connect(Nav)(_Nav);

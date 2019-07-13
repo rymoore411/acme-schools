@@ -1,5 +1,6 @@
-      import {createStore, combineReducers} from 'redux';
-      import {applyMiddeware} from 'redux-thunk';
+      import {createStore, combineReducers, applyMiddleware} from 'redux';
+      import thunk from 'redux-thunk';
+      import axios from 'axios';
 
       const SET_SCHOOLS = 'SET_SCHOOLS';
       const SET_STUDENTS = 'SET_STUDENTS';
@@ -25,7 +26,7 @@
         students: studentsReducer
       });
 
-      const store = createStore(reducer, applyMiddleware(ReduxThunk.default));
+      const store = createStore(reducer, applyMiddleware(thunk));
 
       //Action creators, thunks
       const _setSchools = (schools)=> {
@@ -55,3 +56,7 @@
           dispatch(_setStudents(response.data));
         }
       }
+
+
+      export default store;
+      export {setSchools, setStudents};

@@ -1,3 +1,4 @@
+import React from 'react';
 import {connect} from 'react-redux';
 
 const _Schools = ({ schools })=> {
@@ -10,8 +11,11 @@ const _Schools = ({ schools })=> {
   )
 }
 
-const Schools = connect(( state )=>{
+const Schools = (( state )=>{
   return {
     schools: state.schools
   }
-})(_Schools);
+})
+
+
+export default connect(Schools)(_Schools);

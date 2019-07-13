@@ -1,14 +1,17 @@
-import React from 'react';
-import { render, HashRouter, Route } from 'react-dom';
+import React, {Component} from 'react';
+import {HashRouter, Route } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import Schools from './Schools';
 import Students from './Students';
 import Home from './Home';
 import Nav from './Nav';
+import store from './store';
+import {setSchools, setStudents} from './store';
 //const {Provider, connect} = ReactRedux;
 //const {HashRouter, Route, Link} = ReactRouterDOM;
 
-class _Routes extends React.Component {
+class _Routes extends Component {
   componentDidMount(){
     this.props.loadSchools();
     this.props.loadStudents();
@@ -30,7 +33,7 @@ const Routes = connect(null, (dispatch)=> {
     loadSchools: ()=> dispatch(setSchools()),
     loadStudents: ()=> dispatch(setStudents())
   };
-})(_Routes);
+})(_Routes)
 
 const App = ()=> {
   return(
@@ -41,4 +44,6 @@ const App = ()=> {
 };
 
 const root = document.querySelector('#root');
-render(<App />, root);
+ReactDOM.render(<App />, root);
+
+// export default connect(Routes)(_Routes);
