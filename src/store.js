@@ -4,6 +4,8 @@
 
       const SET_SCHOOLS = 'SET_SCHOOLS';
       const SET_STUDENTS = 'SET_STUDENTS';
+      const CREATE_STUDENT = 'CREATE_STUDENT';
+      const DESTROY_STUDENT = 'DESTROY_STUDENT';
 
       const schoolsReducer = (state = [], action)=> {
         switch(action.type){
@@ -17,6 +19,10 @@
         switch(action.type){
           case SET_STUDENTS:
             return action.students;
+          case CREATE_STUDENT:
+            return [...state, action.student];
+          case DESTROY_STUDENT:
+            return state.filter(student => action.student.id !== student.id);
         }
         return state;
       }
@@ -29,6 +35,35 @@
       const store = createStore(reducer, applyMiddleware(thunk));
 
       //Action creators, thunks
+      const _destroyStudent = (student)=> {
+        return {
+          type: DESTROY_STUDENT,
+          student
+        }
+      }
+
+      const destroyStudent = (student)=> {
+        return async (dispatch) => {
+          await axios.delete(`/api/students/${student.id}`);
+          dispatch(_destroyStudent(student));
+        }
+      }
+
+
+      const _createStudent = (student)=> {
+        return {
+          type: CREATE_STUDENT,
+          student
+        }
+      }
+
+      const createStudent = (student)=>{
+        return async (dispatch) => {
+          const response = await axios.post(`/api/students`, student);
+          dispatch(_createStudent(response.data));
+        }
+      }
+
       const _setSchools = (schools)=> {
         return {
           type: SET_SCHOOLS,
@@ -59,4 +94,4 @@
 
 
       export default store;
-      export {setSchools, setStudents};
+      export {setSchools, setStudents, createStudent, destroyStudent};

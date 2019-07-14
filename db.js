@@ -78,7 +78,8 @@ const syncAndSeed = async() => {
     firstName: student.firstName,
     lastName: student.lastName,
     email: student.email,
-    GPA: student.gpa
+    GPA: student.gpa,
+    schoolId: calPoly.id
   })));
 
 // ryan.schoolId = calPoly.id;

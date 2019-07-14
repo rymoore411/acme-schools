@@ -6,7 +6,7 @@ const _Students = ({ students })=> {
   return(
     <ul>
       {
-        students.map(student => <li key={student.id}>{student.firstName}</li>)
+        students.map(student => <li key={student.id}>{student.firstName}<button>Destroy</button></li>)
       }
     </ul>
   )

@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const db = require('./db');
 const { Student, School} = db.models;
+app.use(express.json());
 
 db.syncAndSeed();
 
@@ -33,4 +34,25 @@ app.get('/api/schools', async(req, res, next)=> {
   }
 
 })
+
+app.post('/api/students', async (req, res, next) => {
+  try{
+    const student = await Student.create(req.body);
+    res.send(student);
+
+  }
+  catch(ex){
+    next(ex);
+  }
+})
+
+app.delete('/api/student/:id', async (req, res, next) => {
+  try{
+    await Student.destroy({where: {id: req.params.id}});
+    res.sendStatus(204);
+  }
+  catch(ex){
+    next(ex);
+  }
+});
 
