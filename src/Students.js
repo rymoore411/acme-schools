@@ -1,21 +1,30 @@
 import {connect} from 'react-redux';
 import React from 'react';
+import {destroyStudent} from './store';
 
-const _Students = ({ students })=> {
+const Students = ({ students, handleDestroy })=> {
 
   return(
     <ul>
       {
-        students.map(student => <li key={student.id}>{student.firstName}<button>Destroy</button></li>)
+        students.map(student => <li key={student.id}>{student.firstName}<button onClick = {()=>handleDestroy(student.id)}>Destroy</button></li>)
       }
     </ul>
   )
 }
 
-const Students = (( state )=>{
+const mapStateToProps = (( state )=>{
   return {
     students: state.students
   }
 })
 
-export default connect(Students)(_Students);
+const mapDispatchToProps = (( dispatch )=>{
+  return{
+    handleDestroy: function(id){
+      dispatch(destroyStudent({id}))
+    }
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Students);
