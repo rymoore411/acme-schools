@@ -57,6 +57,7 @@ const mapStateToProps = (( state )=> {
 const mapDispatchToProps = (( dispatch )=> {
   return {
     handleCreate: function(evt){
+      event.preventDefault();
       dispatch(createStudent({
         firstName: evt.target.firstName.value,
         lastName: evt.target.lastName.value,
