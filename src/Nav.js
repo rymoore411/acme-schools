@@ -4,13 +4,15 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import {createStudent} from './store'
 
-const Nav = ({ schools, students, handleCreate})=> {
+const Nav = ({ schools, students, handleCreate, location})=> {
+  const {pathname} = location;
+
   return(
     <div>
     <div>
-      <Link to='/'>Home</Link>
-      <Link to='/schools'>Schools ({schools.length})</Link>
-      <Link to='/students'>Students ({students.length})</Link>
+      <Link to='/' className ={pathname === '/' ? 'active': ''}>Home</Link>
+      <Link to='/schools' className ={pathname === '/schools' ? 'active': ''}>Schools ({schools.length})</Link>
+      <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
     </div>
     <div>
       <form onSubmit ={handleCreate}>

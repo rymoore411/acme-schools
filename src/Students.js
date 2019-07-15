@@ -7,7 +7,7 @@ const Students = ({ students, handleDestroy })=> {
   return(
     <ul>
       {
-        students.map(student => <li key={student.id}>{student.firstName}<button onClick = {()=>handleDestroy(student.id)}>Destroy</button></li>)
+        students.map(student => <li key={student.id}>{student.firstName}{' '}<button onClick = {()=>handleDestroy(student.id)} className = 'button'>Destroy</button></li>)
       }
     </ul>
   )
