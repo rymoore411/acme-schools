@@ -13,7 +13,10 @@ const Nav = ({ schools, students, handleCreate, location})=> {
       <Link to='/' className ={pathname === '/' ? 'active': ''}>Home</Link>
       <Link to='/schools' className ={pathname === '/schools' ? 'active': ''}>Schools ({schools.length})</Link>
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
+      <Link to={`/schools/${schools.id}`} className ={pathname === `/schools/${schools.id}`? 'active': ''}>Most Popular {schools.name} Num Students</Link>
+      <Link to={`/schools/${schools.id}`} className={pathname === `/schools/${schools.id}`? 'active': ''}>Top School {schools.name}</Link>
     </div>
+
     <div>
       <form onSubmit ={handleCreate}>
         <div>

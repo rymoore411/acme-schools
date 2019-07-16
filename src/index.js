@@ -6,6 +6,8 @@ import Schools from './Schools';
 import Students from './Students';
 import Home from './Home';
 import Nav from './Nav';
+import MostPopular from './MostPopular';
+import TopSchool from './TopSchool';
 import store from './store';
 import {setSchools, setStudents} from './store';
 //const {Provider, connect} = ReactRedux;
@@ -23,6 +25,8 @@ class _Routes extends Component {
         <Route path = '/' exact component = { Home } />
         <Route path = '/schools' component = { Schools } />
         <Route path = '/students' component = { Students } />
+        <Route path = '/schools/:id' component = {MostPopular} />
+        <Route path = '/schools/:id' component = {TopSchool} />
       </HashRouter>
     );
   }
