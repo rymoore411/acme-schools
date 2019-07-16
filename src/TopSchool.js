@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import React from 'react';
 
-const MostPopular = ()=> <h2>Most Popular</h2>
+const TopSchool = ()=> <h2>Top School</h2>
 
-export default MostPopular;
+export default TopSchool;

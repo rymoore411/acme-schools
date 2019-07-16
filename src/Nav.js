@@ -2,10 +2,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import {createStudent} from './store'
+import {createStudent, popular} from './store'
 
-const Nav = ({ schools, students, handleCreate, location})=> {
+const Nav = ({ schools, students, handleCreate, location, studentsPopular})=> {
   const {pathname} = location;
+  const popularSchoolId = studentsPopular.find((student)=>(student)).schoolId;
+
+  console.log(studentsPopular);
+
+  const popularSchool = schools.find((school)=>(school.id === popularSchoolId));
+
+  console.log(popularSchool);
 
   return(
     <div>
@@ -13,7 +20,7 @@ const Nav = ({ schools, students, handleCreate, location})=> {
       <Link to='/' className ={pathname === '/' ? 'active': ''}>Home</Link>
       <Link to='/schools' className ={pathname === '/schools' ? 'active': ''}>Schools ({schools.length})</Link>
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
-      <Link to={`/schools/${schools.id}`} className ={pathname === `/schools/${schools.id}`? 'active': ''}>Most Popular {schools.name} Num Students</Link>
+      <Link to={`/schools/${popularSchoolId}`} className ={pathname === `/schools/${popularSchoolId}`? 'active': ''}>Most Popular {popularSchool.name} {studentsPopular.length}</Link>
       <Link to={`/schools/${schools.id}`} className={pathname === `/schools/${schools.id}`? 'active': ''}>Top School {schools.name}</Link>
     </div>
 
@@ -53,9 +60,11 @@ const Nav = ({ schools, students, handleCreate, location})=> {
 }
 
 const mapStateToProps = (( state )=> {
+
   return {
     schools: state.schools,
-    students: state.students
+    students: state.students,
+    studentsPopular: popular(state)
   };
 });
 
