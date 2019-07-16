@@ -6,6 +6,11 @@ import {createStudent, popular} from './store'
 
 const Nav = ({ schools, students, handleCreate, location, studentsPopular})=> {
   const {pathname} = location;
+
+  if(studentsPopular.length === 0){
+    return null;
+  }
+
   const popularSchoolId = studentsPopular.find((student)=>(student)).schoolId;
 
   console.log(studentsPopular);
@@ -20,7 +25,7 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular})=> {
       <Link to='/' className ={pathname === '/' ? 'active': ''}>Home</Link>
       <Link to='/schools' className ={pathname === '/schools' ? 'active': ''}>Schools ({schools.length})</Link>
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
-      <Link to={`/schools/${popularSchoolId}`} className ={pathname === `/schools/${popularSchoolId}`? 'active': ''}>Most Popular {popularSchool.name} {studentsPopular.length}</Link>
+      <Link to={`/schools/${popularSchoolId}`} className ={pathname === `/schools/${popularSchoolId}`? 'active': ''}>Most Popular {popularSchool.name} ({studentsPopular.length})</Link>
       <Link to={`/schools/${schools.id}`} className={pathname === `/schools/${schools.id}`? 'active': ''}>Top School {schools.name}</Link>
     </div>
 

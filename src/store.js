@@ -34,7 +34,11 @@
 
       const popular = (state) => {
 
+        let matchStudents;
+
+        if(state.students){
         const students = state.students;
+
         const schools = state.schools;
 
         const studentIds = students.map(el=>(el.schoolId));
@@ -65,33 +69,12 @@
           }
         }
 
-        const matchStudents = students.filter((student)=>(maxId === (student.schoolId).toString()));
+        matchStudents = students.filter((student)=>(maxId === (student.schoolId).toString()));
+      }
 
         //const matchSchool = schools.find((school)=>(school.id === maxId));
 
-        return [{
-          firstName: 'Ryan',
-          lastName: 'Moore',
-          email: 'ryan_moore@acme.com',
-          gpa: 1.9,
-          schoolId: 1
-        },
-        {
-          firstName: 'Jason',
-          lastName: 'Scott',
-          email: 'jason_scott@acme.com',
-          gpa: 2.2,
-          schoolId: 2
-        },
-        {
-          firstName: 'Matthew',
-          lastName: 'Simpson',
-          email: 'matthew_simpson@acme.com',
-          gpa: 4.0,
-          schoolId: 2
-        }
-        ];
-
+        return matchStudents;
 
         }
 
