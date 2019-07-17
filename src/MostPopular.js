@@ -1,33 +1,39 @@
 import {connect} from 'react-redux';
 import React from 'react';
+import {popular} from './store'
 
 
-const MostPopular = ()=> <h2>MostPopular</h2>
+const MostPopular = ({studentsPopular, schools}) => {
 
-export default MostPopular;
+  if(studentsPopular.length === 0){
+    return null;
+  }
 
-// const MostPopular = ({popularSchool}) => {
+  const popularSchoolId = studentsPopular.find((student)=>(student)).schoolId;
 
-//   return(
-//     <div>
-//       <h2>{popularSchool.name}({popularStudents.length})</h2>
-//         <ul>
-//           {
-//             popularStudents.map(student=> <li key={student.id}>{student.name}</li>)
-//           }
-//         </ul>
-//     </div>
-//   )
-// }
+  const popularSchool = schools.find((school)=>(school.id === popularSchoolId));
 
-// const mapStateToProps = ({schools, students} ) => {
+  return(
+    <div>
+      <h2>{popularSchool.name}({studentsPopular.length}) Enrolled</h2>
+        <ul>
+          {
+            studentsPopular.map(student=> <li key={student.id}>{student.firstName}</li>)
+          }
+        </ul>
+    </div>
+  )
+}
 
-//   const popularSchool =
+const mapStateToProps = ((state) => {
+
+  return {
+    schools: state.schools,
+    studentsPopular: popular(state)
+  }
+
+});
 
 
 
-// }
-
-
-
-// export default connect(mapStateToProps)(MostPopular);
+export default connect(mapStateToProps)(MostPopular);

@@ -50,9 +50,7 @@
           let num = studentIds[i];
 
           if(!countIds[num]){
-
             countIds[num] = 1;
-
           }
           else{
             countIds[num]++;

@@ -13,11 +13,7 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular})=> {
 
   const popularSchoolId = studentsPopular.find((student)=>(student)).schoolId;
 
-  console.log(studentsPopular);
-
   const popularSchool = schools.find((school)=>(school.id === popularSchoolId));
-
-  console.log(popularSchool);
 
   return(
     <div>

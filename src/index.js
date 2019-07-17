@@ -23,7 +23,7 @@ class _Routes extends Component {
       <HashRouter>
         <Route component = { Nav } />
         <Route path = '/' exact component = { Home } />
-        <Route path = '/schools' component = { Schools } />
+        <Route path = '/schools' exact component = { Schools } />
         <Route path = '/students' component = { Students } />
         <Route path = '/schools/:id' component = {MostPopular} />
         <Route path = '/schools/:id' component = {TopSchool} />
