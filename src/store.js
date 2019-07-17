@@ -67,13 +67,20 @@
           }
         }
 
-        matchStudents = students.filter((student)=>(maxId === (student.schoolId).toString()));
-      }
+        matchStudents = students.filter((student)=>{
+
+          if(student.schoolId){
+
+          return(
+          maxId === (student.schoolId).toString())
+          }
+        })
 
         //const matchSchool = schools.find((school)=>(school.id === maxId));
         return matchStudents;
 
       }
+    }
 
       const top = (state) => {
 
@@ -106,7 +113,16 @@
           }
         }
 
-        const maxStudents = studs.filter((stud)=>(maxId === (stud.schoolId).toString()));
+        const maxStudents = studs.filter(stud=>{
+
+          if(stud.schoolId){
+
+          return (
+            maxId === ((stud.schoolId).toString())
+              )
+            }
+          }
+          );
 
         const gpa = (max/(maxStudents.length)).toFixed(2);
 
@@ -151,6 +167,11 @@
       const createStudent = (student)=>{
         return async (dispatch) => {
           try{
+          console.log(student.schoolId);
+          if(student.schoolId === '-- Not Enrolled --'){
+            delete student.schoolId;
+          }
+
           const response = await axios.post(`/api/students`, student);
           dispatch(_createStudent(response.data));
           }

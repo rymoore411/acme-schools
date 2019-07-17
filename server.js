@@ -38,6 +38,9 @@ app.get('/api/schools', async(req, res, next)=> {
 app.post('/api/students', async (req, res, next) => {
   try{
     console.log(req.body);
+    // if(req.body.schoolId === undefined){
+    //   const studentNoSchool = await.create()
+    // }
     const student = await Student.create(req.body);
     res.send(student);
 

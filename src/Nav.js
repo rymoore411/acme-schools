@@ -47,7 +47,7 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
         <div>
           <label>Enroll at</label>
           <select name="schools">
-            <option value="">-- Not Enrolled --</option>
+            <option value={null}>-- Not Enrolled --</option>
             {
               schools.map((school)=>(
                 <option key={school.id} value={school.id}>{school.name}</option>
@@ -72,11 +72,19 @@ const mapStateToProps = (( state )=> {
   };
 });
 
-const mapDispatchToProps = (( dispatch )=> {
+const mapDispatchToProps = ( dispatch )=> {
   return {
     handleCreate: function(evt){
       event.preventDefault();
 
+      // if(evt.target.schools.value === ''){
+      //   dispatch(createStudent({
+      //     firstName: evt.target.firstName.value,
+      //     lastName: evt.target.lastName.value,
+      //     email: evt.target.email.value,
+      //     GPA: evt.target.gpa.value
+      //   }));
+      // }
       dispatch(createStudent({
         firstName: evt.target.firstName.value,
         lastName: evt.target.lastName.value,
@@ -84,9 +92,10 @@ const mapDispatchToProps = (( dispatch )=> {
         GPA: evt.target.gpa.value,
         schoolId: evt.target.schools.value
       }));
+
     }
   }
-})
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);
