@@ -71,28 +71,56 @@
       }
 
         //const matchSchool = schools.find((school)=>(school.id === maxId));
-
         return matchStudents;
 
       }
 
       const top = (state) => {
 
+        const studs = state.students;
+        const schools = state.schools;
+
         let countGPA = {};
+        let numStudents;
+
+        if(studs.length !== 0 ){
 
         studs.forEach((el)=>{
 
           let school = el.schoolId;
 
           if(!countGPA[school]){
-            countGPA[school] = el.gpa;
+            numStudents = 1;
+            countGPA[school] = (el.GPA*1)/numStudents;
           }
           else{
-            countGPA[school] = countGPA[school] + el.gpa;
+            numStudents++;
+            countGPA[school] = (countGPA[school] + (el.GPA*1))/numStudents;
           }
         })
 
-        return countGPA;
+        let max = 0;
+        let maxId;
+
+        for(let key in countGPA){
+          if(countGPA[key] > max){
+            maxId = key;
+            max = countGPA[key];
+          }
+        }
+
+        const maxStudents = studs.filter((stud)=>(maxId === (stud.schoolId).toString()));
+
+        const top = schools.find((school)=>(maxId === school.id));
+
+        const topInfo = {
+          students: maxStudents,
+          avgGPA: max,
+          topSchool: top
+        }
+        return topInfo;
+
+      }
 
       }
 
@@ -158,4 +186,4 @@
 
 
       export default store;
-      export {setSchools, setStudents, createStudent, destroyStudent, popular};
+      export {setSchools, setStudents, createStudent, destroyStudent, popular, top};
