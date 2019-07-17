@@ -74,7 +74,27 @@
 
         return matchStudents;
 
-        }
+      }
+
+      const top = (state) => {
+
+        let countGPA = {};
+
+        studs.forEach((el)=>{
+
+          let school = el.schoolId;
+
+          if(!countGPA[school]){
+            countGPA[school] = el.gpa;
+          }
+          else{
+            countGPA[school] = countGPA[school] + el.gpa;
+          }
+        })
+
+        return countGPA;
+
+      }
 
       const store = createStore(reducer, applyMiddleware(thunk));
 

@@ -85,7 +85,7 @@ const syncAndSeed = async() => {
 // ryan.schoolId = calPoly.id;
 // jason.schoolId = harvard.id;
 // matthew.schoolId = mit.id;
-// assign on front end or save here
+// would have to save
 
 }
 
