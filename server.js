@@ -37,6 +37,7 @@ app.get('/api/schools', async(req, res, next)=> {
 
 app.post('/api/students', async (req, res, next) => {
   try{
+    console.log(req.body);
     const student = await Student.create(req.body);
     res.send(student);
 
@@ -56,3 +57,6 @@ app.delete('/api/students/:id', async (req, res, next) => {
   }
 });
 
+app.use((err, req, res, next)=>{
+  res.status(500).send(err);
+})

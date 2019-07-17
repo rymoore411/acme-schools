@@ -19,34 +19,35 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
   return(
     <div>
     <div>
-      <Link to='/' className ={pathname === '/' ? 'active': ''}>Home</Link>
+      <Link to='/' className ={pathname === '/' ? 'active': ''}>Acme Schools</Link>
       <Link to='/schools' className ={pathname === '/schools' ? 'active': ''}>Schools ({schools.length})</Link>
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
-      <Link to={`/schools/${popularSchoolId}`} className ={pathname === `/schools/${popularSchoolId}`? 'active': ''}>Most Popular {popularSchool.name} ({studentsPopular.length})</Link>
-      <Link to={`/schools/${topSchool.topSchool.id}`} className={pathname === `/schools/${topSchool.topSchool.id}`? 'active': ''}>Top School ({topSchool.topSchool.name})</Link>
+      <Link to={`/schools/popular`} className ={pathname === `/schools/popular`? 'active': ''}>Most Popular {popularSchool.name} ({studentsPopular.length})</Link>
+      <Link to={`/schools/top`} className={pathname === `/schools/top`? 'active': ''}>Top School ({topSchool.topSchool.name})</Link>
     </div>
 
     <div>
       <form onSubmit ={handleCreate}>
         <div>
           <label>First Name</label>
-          <input type="text" name="firstName" />
+          <input type="text" name="firstName" required/>
         </div>
         <div>
           <label>Last Name</label>
-          <input type="text" name="lastName" />
+          <input type="text" name="lastName" required/>
         </div>
         <div>
           <label>Email</label>
-          <input type="text" name="email" />
+          <input type="text" name="email" required/>
         </div>
         <div>
           <label>GPA</label>
-          <input type="text" name="gpa" />
+          <input type="text" name="gpa" required/>
         </div>
         <div>
           <label>Enroll at</label>
           <select name="schools">
+            <option value="">-- Not Enrolled --</option>
             {
               schools.map((school)=>(
                 <option key={school.id} value={school.id}>{school.name}</option>
@@ -75,6 +76,7 @@ const mapDispatchToProps = (( dispatch )=> {
   return {
     handleCreate: function(evt){
       event.preventDefault();
+
       dispatch(createStudent({
         firstName: evt.target.firstName.value,
         lastName: evt.target.lastName.value,

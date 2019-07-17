@@ -25,8 +25,8 @@ class _Routes extends Component {
         <Route path = '/' exact component = { Home } />
         <Route path = '/schools' exact component = { Schools } />
         <Route path = '/students' component = { Students } />
-        <Route path = '/schools/:id' component = {MostPopular} />
-        <Route path = '/schools/:id' component = {TopSchool} />
+        <Route path = '/schools/popular' component = {MostPopular} />
+        <Route path = '/schools/top' component = {TopSchool} />
       </HashRouter>
     );
   }

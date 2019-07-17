@@ -81,7 +81,6 @@
         const schools = state.schools;
 
         let countGPA = {};
-        let numStudents;
 
         if(studs.length !== 0 ){
 
@@ -90,12 +89,10 @@
           let school = el.schoolId;
 
           if(!countGPA[school]){
-            numStudents = 1;
-            countGPA[school] = (el.GPA*1)/numStudents;
+            countGPA[school] = el.GPA*1;
           }
           else{
-            numStudents++;
-            countGPA[school] = (countGPA[school] + (el.GPA*1))/numStudents;
+            countGPA[school] = countGPA[school] + (el.GPA*1);
           }
         })
 
@@ -111,11 +108,13 @@
 
         const maxStudents = studs.filter((stud)=>(maxId === (stud.schoolId).toString()));
 
+        const gpa = (max/(maxStudents.length)).toFixed(2);
+
         const top = schools.find((school)=>(maxId === school.id));
 
         const topInfo = {
           students: maxStudents,
-          avgGPA: max,
+          avgGPA: gpa,
           topSchool: top
         }
         return topInfo;
@@ -151,8 +150,13 @@
 
       const createStudent = (student)=>{
         return async (dispatch) => {
+          try{
           const response = await axios.post(`/api/students`, student);
           dispatch(_createStudent(response.data));
+          }
+          catch(ex){
+            console.log(ex);
+          }
         }
       }
 

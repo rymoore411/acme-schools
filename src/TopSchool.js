@@ -1,8 +1,6 @@
 import {connect} from 'react-redux';
 import React from 'react';
 import {top} from './store'
-import { isUndefined } from 'util';
-
 
 const TopSchool = ({topSchool}) => {
 

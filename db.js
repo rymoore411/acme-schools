@@ -64,7 +64,7 @@ const schools = [{
   name: 'M.I.T',
   imageURL: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/44/MIT_Seal.svg/1920px-MIT_Seal.svg.png'
 }
-];
+]
 
 const syncAndSeed = async() => {
   try{
