@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import {createStudent, popular, top} from './store'
 
-const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSchools})=> {
+const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSchool})=> {
 
   const {pathname} = location;
 
-  if(studentsPopular.length === 0 || topSchools === undefined){
+  if(studentsPopular.length === 0 || topSchool === undefined){
     return null;
   }
 
@@ -23,7 +23,7 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
       <Link to='/schools' className ={pathname === '/schools' ? 'active': ''}>Schools ({schools.length})</Link>
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
       <Link to={`/schools/${popularSchoolId}`} className ={pathname === `/schools/${popularSchoolId}`? 'active': ''}>Most Popular {popularSchool.name} ({studentsPopular.length})</Link>
-      <Link to={`/schools/${topSchools.topSchool.id}`} className={pathname === `/schools/${topSchools.topSchool.id}`? 'active': ''}>Top School ({topSchools.topSchool.name})</Link>
+      <Link to={`/schools/${topSchool.topSchool.id}`} className={pathname === `/schools/${topSchool.topSchool.id}`? 'active': ''}>Top School ({topSchool.topSchool.name})</Link>
     </div>
 
     <div>
@@ -67,7 +67,7 @@ const mapStateToProps = (( state )=> {
     schools: state.schools,
     students: state.students,
     studentsPopular: popular(state),
-    topSchools: top(state)
+    topSchool: top(state)
   };
 });
 
