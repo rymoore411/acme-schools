@@ -11,7 +11,7 @@ const Schools = ({ schools, students, count })=> {
   return(
     <ul>
       {
-        schools.map(school => <li key={school.id}>{school.name}</li>)
+        count.map(school => <li key={school.id}>{school.schoolName}{' '}Student Count {school.studentCount}</li>)
       }
     </ul>
   )

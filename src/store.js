@@ -147,8 +147,6 @@
         const students = state.students;
         const schools = state.schools;
 
-        console.log(console.log(students.length));
-
         if(students.length !== 0 && schools.length !== 0){
 
         students.forEach(stud =>{
@@ -168,13 +166,26 @@
 
           for(let key in schoolObj){
 
-            if(school.id === key*1){
+            if(school.id === key){
 
               schoolArr.push({
                 schoolName: school.name,
-                studentCount: schoolObj[key]
+                studentCount: schoolObj[key],
+                id: school.id
                 })
             }
+          }
+        })
+
+        schools.forEach(el=>{
+
+        if(schoolArr.find((school)=>(school.schoolName === el.name)) === undefined){
+
+          schoolArr.push({
+            schoolName: el.name,
+            studentCount: 0,
+            id: el.id
+           })
           }
         })
 
