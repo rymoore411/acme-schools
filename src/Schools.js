@@ -1,7 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {schoolCount} from './store';
 
-const _Schools = ({ schools })=> {
+const Schools = ({ schools, students, count })=> {
+
+  if(count === undefined){
+    return null;
+  }
+
   return(
     <ul>
       {
@@ -11,11 +17,13 @@ const _Schools = ({ schools })=> {
   )
 }
 
-const Schools = (( state )=>{
+const mapStateToProps = ( state )=>{
   return {
-    schools: state.schools
+    schools: state.schools,
+    students: state.students,
+    count: schoolCount(state)
   }
-})
+}
 
 
-export default connect(Schools)(_Schools);
+export default connect(mapStateToProps)(Schools);

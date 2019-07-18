@@ -139,6 +139,50 @@
 
       }
 
+      const schoolCount = (state)=>{
+
+        let schoolObj = {};
+        let schoolArr = [];
+
+        const students = state.students;
+        const schools = state.schools;
+
+        console.log(console.log(students.length));
+
+        if(students.length !== 0 && schools.length !== 0){
+
+        students.forEach(stud =>{
+
+          let num = stud.schoolId;
+
+          if(!schoolObj[num]){
+            schoolObj[num] = 1;
+          }
+          else{
+            schoolObj[num]++;
+          }
+
+        })
+
+        schools.forEach(school => {
+
+          for(let key in schoolObj){
+
+            if(school.id === key*1){
+
+              schoolArr.push({
+                schoolName: school.name,
+                studentCount: schoolObj[key]
+                })
+            }
+          }
+        })
+
+        return schoolArr;
+      }
+
+  }
+
       const store = createStore(reducer, applyMiddleware(thunk));
 
       //Action creators, thunks
@@ -211,4 +255,4 @@
 
 
       export default store;
-      export {setSchools, setStudents, createStudent, destroyStudent, popular, top};
+      export {setSchools, setStudents, createStudent, destroyStudent, popular, top, schoolCount};

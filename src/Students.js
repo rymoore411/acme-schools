@@ -2,12 +2,19 @@ import {connect} from 'react-redux';
 import React from 'react';
 import {destroyStudent} from './store';
 
-const Students = ({ students, handleDestroy })=> {
+const Students = ({ students, handleDestroy, schools })=> {
 
   return(
     <ul>
       {
-        students.map(student => <li key={student.id}>{student.firstName}{' '}<button onClick = {()=>handleDestroy(student.id)} className = 'button'>Destroy</button></li>)
+        students.map(student => <li key={student.id}>{student.firstName}{' '}
+        {student.lastName}{' '}GPA:
+        <select name="schools">
+          {
+            schools.map(school=>(<option key={school.id} value={school.id}>{school.name}</option>))
+          }
+        </select>
+         {student.GPA}<button onClick = {()=>handleDestroy(student.id)} className = 'button'>Destroy</button></li>)
       }
     </ul>
   )
@@ -15,7 +22,8 @@ const Students = ({ students, handleDestroy })=> {
 
 const mapStateToProps = (( state )=>{
   return {
-    students: state.students
+    students: state.students,
+    schools: state.schools
   }
 })
 

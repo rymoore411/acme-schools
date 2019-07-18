@@ -77,14 +77,6 @@ const mapDispatchToProps = ( dispatch )=> {
     handleCreate: function(evt){
       event.preventDefault();
 
-      // if(evt.target.schools.value === ''){
-      //   dispatch(createStudent({
-      //     firstName: evt.target.firstName.value,
-      //     lastName: evt.target.lastName.value,
-      //     email: evt.target.email.value,
-      //     GPA: evt.target.gpa.value
-      //   }));
-      // }
       dispatch(createStudent({
         firstName: evt.target.firstName.value,
         lastName: evt.target.lastName.value,
