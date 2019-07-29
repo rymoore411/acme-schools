@@ -15,7 +15,11 @@ const Student = conn.define('student', {
       isEmail: true
     }
   },
-  GPA: Sequelize.DECIMAL
+  GPA: Sequelize.DECIMAL,
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 
 });
 
@@ -37,18 +41,22 @@ const students = [{
   lastName: 'Moore',
   email: 'ryan_moore@acme.com',
   gpa: 1.9,
+  password: 'Ryan',
 },
 {
   firstName: 'Jason',
   lastName: 'Scott',
   email: 'jason_scott@acme.com',
   gpa: 2.2,
+  password: 'Jason',
 },
 {
   firstName: 'Matthew',
   lastName: 'Simpson',
   email: 'matthew_simpson@acme.com',
   gpa: 4.0,
+  password: 'Matthew',
+
 }
 ];
 
@@ -79,6 +87,7 @@ const syncAndSeed = async() => {
     lastName: student.lastName,
     email: student.email,
     GPA: student.gpa,
+    password: student.password,
     schoolId: calPoly.id
   })));
 
@@ -93,6 +102,14 @@ catch(err){
   console.log(err);
 }
 
+}
+
+Student.login = function (email, password){
+  return this.findOne({
+    where:{
+      email
+    }
+  })
 }
 
 

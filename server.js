@@ -3,9 +3,17 @@ const app = express();
 const path = require('path');
 const db = require('./db');
 const { Student, School} = db.models;
-app.use(express.json());
+const session = require('express-session');
 
 db.syncAndSeed();
+
+app.use(express.json());
+
+app.use(session({
+  secret: 'Super Secret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 const port = process.env.PORT || 3000;
 
@@ -37,7 +45,7 @@ app.get('/api/schools', async(req, res, next)=> {
 
 app.post('/api/students', async (req, res, next) => {
   try{
-    console.log(req.body);
+    //console.log(req.body);
     // if(req.body.schoolId === undefined){
     //   const studentNoSchool = await.create()
     // }
@@ -62,4 +70,52 @@ app.delete('/api/students/:id', async (req, res, next) => {
 
 app.use((err, req, res, next)=>{
   res.status(500).send(err);
+})
+
+
+//Login and logout routes
+
+app.get('/api/sessions', async (req, res, next) => {
+  try{
+    if(req.session.email){
+      res.status(200).send(req.session);
+    }
+  }
+  catch(ex){
+    next(ex);
+  }
+})
+
+app.post('/api/sessions', async (req, res, next)=>{
+
+  const {email, password} = req.body;
+
+  if(email && password){
+    const loginStudent = await Student.login(email, password);
+      if(loginStudent){
+        if(loginStudent.password === password){
+          req.session.email = email;
+          res.status(200).send("WE LOGGED IN");
+        }else{
+          res.status(401).send("WRONG PASSWORD");
+        }
+
+      }else{
+        res.status(401).send("MAKE AN ACCOUNT");
+      }
+
+  }else{
+    res.status(401).send("ENTER EMAIL AND PASSWORD");
+  }
+
+
+})
+
+app.delete('/api/sessions', async (req, res, next)=>{
+    if(req.session.email){
+      delete req.session.email;
+    }else{
+      console.log("this should never appear, check code in app.delete route");
+    }
+
 })

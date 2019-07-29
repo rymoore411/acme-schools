@@ -8,6 +8,7 @@ import Home from './Home';
 import Nav from './Nav';
 import MostPopular from './MostPopular';
 import TopSchool from './TopSchool';
+import Login from './Login';
 import store from './store';
 import {setSchools, setStudents} from './store';
 //const {Provider, connect} = ReactRedux;
@@ -27,6 +28,7 @@ class _Routes extends Component {
         <Route path = '/students' component = { Students } />
         <Route path = '/schools/popular' component = {MostPopular} />
         <Route path = '/schools/top' component = {TopSchool} />
+        <Route path = '/login' component = {Login} />
       </HashRouter>
     );
   }

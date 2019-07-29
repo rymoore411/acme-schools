@@ -16,6 +16,8 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
 
   const popularSchool = schools.find((school)=>(school.id === popularSchoolId));
 
+
+
   return(
     <div>
     <div>
@@ -24,6 +26,7 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
       <Link to={`/schools/popular`} className ={pathname === `/schools/popular`? 'active': ''}>Most Popular {popularSchool.name} ({studentsPopular.length})</Link>
       <Link to={`/schools/top`} className={pathname === `/schools/top`? 'active': ''}>Top School ({topSchool.topSchool.name})</Link>
+      <Link to='/login' className = {pathname === '/login' ? 'active': ''}> Login</Link>
     </div>
 
     <div>
@@ -43,6 +46,10 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
         <div>
           <label>GPA</label>
           <input type="text" name="gpa" required/>
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" name="password" required/>
         </div>
         <div>
           <label>Enroll at</label>
@@ -82,9 +89,9 @@ const mapDispatchToProps = ( dispatch )=> {
         lastName: evt.target.lastName.value,
         email: evt.target.email.value,
         GPA: evt.target.gpa.value,
+        password: evt.target.password.value,
         schoolId: evt.target.schools.value
       }));
-
     }
   }
 }

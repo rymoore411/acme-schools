@@ -7,6 +7,8 @@
       const CREATE_STUDENT = 'CREATE_STUDENT';
       const DESTROY_STUDENT = 'DESTROY_STUDENT';
 
+      const SET_LOGIN = 'SET_LOGIN';
+
       const schoolsReducer = (state = [], action)=> {
         switch(action.type){
           case SET_SCHOOLS:
@@ -29,7 +31,8 @@
 
       const reducer = combineReducers({
         schools: schoolsReducer,
-        students: studentsReducer
+        students: studentsReducer,
+        user: authReducer
       });
 
       const popular = (state) => {
