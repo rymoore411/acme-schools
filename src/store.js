@@ -289,8 +289,9 @@
 
       const setLogin = (user)=>{
         return async (dispatch)=>{
-          const response = await axios.get('/api/sessions', user);
+          const response = await axios.post('/api/sessions', user);
           dispatch(_setLogin(response.data));
+          window.location.hash = '/';
         }
       }
 

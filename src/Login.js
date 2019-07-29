@@ -6,7 +6,7 @@ import {setLogin} from './store';
 const Login = ({user, handleLogin})=>{
 
   return(
-    <form onSumbit = {handleLogin}>
+    <form onSubmit = {handleLogin}>
       <label>Email
         <input type="text" name="email" required/>
       </label>
@@ -40,4 +40,4 @@ const mapDispatchToProps = ( dispatch )=>{
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
