@@ -287,9 +287,9 @@
         }
       }
 
-      const setLogin = ()=>{
+      const setLogin = (user)=>{
         return async (dispatch)=>{
-          const response = await axios.get('/api/sessions');
+          const response = await axios.get('/api/sessions', user);
           dispatch(_setLogin(response.data));
         }
       }

@@ -1,56 +1,43 @@
 import React from 'react';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import {setLogin} from './store';
 
 
-class Login extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      email: '',
-      password: '',
-    }
-    this.onChange = this.onChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+const Login = ({user, handleLogin})=>{
 
+  return(
+    <form onSumbit = {handleLogin}>
+      <label>Email
+        <input type="text" name="email" required/>
+      </label>
+      <label>Password
+        <input type="password" name="password" required/>
+      </label>
+      <button>Login</button>
+    </form>
+  )
+
+}
+
+
+const mapStateToProps = (state)=>{
+  return{
+    user: state.user
   }
+}
 
-  onChange(ev){
-    this.setState({[ev.target.name]: ev.target.value});
-  }
+const mapDispatchToProps = ( dispatch )=>{
+  return{
+    handleLogin: function(ev){
+      event.preventDefault();
 
-  async handleClick(ev){
-    ev.preventDefault();
-    try{
-    await axios.post('/api/sessions', this.state);
-    const cookie = await axios.get('/api/sessions');
-    console.log(cookie);
-    window.location.hash = '/';
+      dispatch(setLogin({
+        email: ev.target.email.value,
+        password: ev.target.password.value
+      }))
     }
-    catch(ex){
-      console.log(ex);
-    }
-
-  }
-
-  render(){
-    const {onChange, handleClick} = this;
-    const {email, password} = this.state;
-
-    return(
-      <form>
-        <label htmlFor='email'>Email
-          <input name='email' value={email} onChange = {onChange}/>
-        </label>
-        <label htmlFor='password'>Password
-          <input name='password' type='password' value={password} onChange = {onChange}/>
-        </label>
-        <button onClick = {handleClick}>Login</button>
-      </form>
-    )
-
-
   }
 }
 
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
