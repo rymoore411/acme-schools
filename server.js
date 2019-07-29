@@ -114,6 +114,7 @@ app.post('/api/sessions', async (req, res, next)=>{
 app.delete('/api/sessions', async (req, res, next)=>{
     if(req.session.email){
       delete req.session.email;
+      res.sendStatus(204);
     }else{
       console.log("this should never appear, check code in app.delete route");
     }
