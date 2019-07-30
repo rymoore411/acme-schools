@@ -13,6 +13,7 @@ const Login = ({user, handleLogin})=>{
       <label>Password
         <input type="password" name="password" required/>
       </label>
+      <div ><font color="red">{(user === 'MAKE AN ACCOUNT' || user === 'WRONG PASSWORD') ? user : ''}</font></div>
       <button>Login</button>
     </form>
   )

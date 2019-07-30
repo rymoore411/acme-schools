@@ -313,7 +313,8 @@
           window.location.hash = '/';
           }
           catch(ex){
-            console.log(ex);
+            console.log(ex.response.data);
+            dispatch(_setLogin(ex.response.data));
           }
         }
       }
