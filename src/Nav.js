@@ -2,11 +2,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import {createStudent, popular, top} from './store'
+import {createStudent, popular, top, setLogout} from './store'
 
-const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSchool, user})=> {
-
-  console.log("hiiiiiii", user.email);
+const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSchool, user, handleLogout})=> {
 
   const {pathname} = location;
 
@@ -28,7 +26,7 @@ const Nav = ({ schools, students, handleCreate, location, studentsPopular, topSc
       <Link to='/students' className ={pathname === '/students' ? 'active': ''}>Students ({students.length})</Link>
       <Link to={`/schools/popular`} className ={pathname === `/schools/popular`? 'active': ''}>Most Popular {popularSchool.name} ({studentsPopular.length})</Link>
       <Link to={`/schools/top`} className={pathname === `/schools/top`? 'active': ''}>Top School ({topSchool.topSchool.name})</Link>
-      <Link to='/login' className = {pathname === '/login' ? 'active': ''}>{user.email ? `Logout ${user.email}` : `Login` }</Link>
+      <Link to='/login' className = {pathname === '/login' ? 'active': ''}>{user.email ? <button onClick = {()=>handleLogout()}>Logout {user.email}</button>  : `Login` }</Link>
     </div>
 
     <div>
@@ -95,7 +93,13 @@ const mapDispatchToProps = ( dispatch )=> {
         password: evt.target.password.value,
         schoolId: evt.target.schools.value
       }));
+    },
+    handleLogout: function(ev){
+      event.preventDefault();
+
+      dispatch(setLogout());
     }
+
   }
 }
 

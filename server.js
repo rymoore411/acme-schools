@@ -95,7 +95,6 @@ app.post('/api/sessions', async (req, res, next)=>{
       if(loginStudent){
         if(loginStudent.password === password){
           req.session.email = email;
-          console.log(req.session);
           res.status(200).send(req.session);
         }else{
           res.status(401).send("WRONG PASSWORD");

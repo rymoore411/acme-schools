@@ -35,7 +35,8 @@
           case SET_LOGIN:
             return action.user;
           case SET_LOGOUT:
-            return action.user;
+            state = {};
+            return state;
         }
         return state;
       }
@@ -295,17 +296,16 @@
         }
       }
 
-      const _setLogout = (user)=>{
+      const _setLogout = ()=>{
         return{
           type: SET_LOGOUT,
-          user
         }
       }
 
-      const setLogout = (user)=> {
+      const setLogout = ()=> {
         return async (dispatch)=>{
           await axios.delete('/api/sessions');
-          dispatch(_setLogout(user));
+          dispatch(_setLogout());
         }
 
       }
