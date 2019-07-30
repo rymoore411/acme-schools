@@ -7,6 +7,7 @@
       const CREATE_STUDENT = 'CREATE_STUDENT';
       const DESTROY_STUDENT = 'DESTROY_STUDENT';
 
+      const SET_SESSION = 'SET_SESSION';
       const SET_LOGIN = 'SET_LOGIN';
       const SET_LOGOUT = 'SET_LOGOUT';
 
@@ -32,6 +33,8 @@
 
       const authReducer = (state = {}, action)=>{
         switch(action.type){
+          case SET_SESSION:
+            return action.session;
           case SET_LOGIN:
             return action.user;
           case SET_LOGOUT:
@@ -266,7 +269,7 @@
       }
 
       const setSchools = ()=>{
-        return async (dispatch) => {
+        return async (dispatch)=> {
           const response = await axios.get('/api/schools');
           dispatch(_setSchools(response.data));
         }
@@ -281,6 +284,20 @@
 
       //Login and Logout
 
+      const _setSession = (session)=>{
+        return {
+          type: SET_SESSION,
+          session
+        }
+      }
+
+      const setSession = ()=>{
+        return async (dispatch)=>{
+          const response = await axios.get('/api/sessions');
+          dispatch(_setSession(response.data));
+        }
+      }
+
       const _setLogin = (user)=>{
         return {
           type: SET_LOGIN,
@@ -290,9 +307,14 @@
 
       const setLogin = (user)=>{
         return async (dispatch)=>{
+          try{
           const response = await axios.post('/api/sessions', user);
           dispatch(_setLogin(response.data));
           window.location.hash = '/';
+          }
+          catch(ex){
+            console.log(ex);
+          }
         }
       }
 
@@ -312,4 +334,4 @@
 
 
       export default store;
-      export {setLogin, setLogout, setSchools, setStudents, createStudent, destroyStudent, popular, top, schoolCount};
+      export {setSession, setLogin, setLogout, setSchools, setStudents, createStudent, destroyStudent, popular, top, schoolCount};

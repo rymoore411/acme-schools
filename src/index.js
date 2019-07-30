@@ -10,7 +10,7 @@ import MostPopular from './MostPopular';
 import TopSchool from './TopSchool';
 import Login from './Login';
 import store from './store';
-import {setSchools, setStudents} from './store';
+import {setSession, setSchools, setStudents} from './store';
 //const {Provider, connect} = ReactRedux;
 //const {HashRouter, Route, Link} = ReactRouterDOM;
 
@@ -18,6 +18,7 @@ class _Routes extends Component {
   componentDidMount(){
     this.props.loadSchools();
     this.props.loadStudents();
+    this.props.loadSession();
   }
   render(){
     return (
@@ -37,7 +38,8 @@ class _Routes extends Component {
 const Routes = connect(null, (dispatch)=> {
   return {
     loadSchools: ()=> dispatch(setSchools()),
-    loadStudents: ()=> dispatch(setStudents())
+    loadStudents: ()=> dispatch(setStudents()),
+    loadSession: ()=> dispatch(setSession())
   };
 })(_Routes)
 
