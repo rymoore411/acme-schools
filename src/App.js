@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {HashRouter, Route } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-import {Provider, connect} from 'react-redux';
+import {connect} from 'react-redux';
 import Schools from './Schools';
 import Students from './Students';
 import Home from './Home';
@@ -9,7 +8,6 @@ import Nav from './Nav';
 import MostPopular from './MostPopular';
 import TopSchool from './TopSchool';
 import Login from './Login';
-import store from './store';
 import {setSession, setSchools, setStudents} from './store';
 
 class _App extends Component {
@@ -20,7 +18,8 @@ class _App extends Component {
   }
   render(){
     const {user} = this.props;
-    console.log(user);
+    if(user.email){
+      window.location.hash = '/';
     return (
       <HashRouter>
         <Route component = { Nav } />
@@ -32,6 +31,15 @@ class _App extends Component {
         <Route path = '/login' component = {Login} />
       </HashRouter>
     );
+    }
+    else{
+      window.location.hash = '/login';
+      return(
+        <HashRouter>
+          <Route path = '/login' component = {Login} />
+        </HashRouter>
+      )
+    }
   }
 }
 
@@ -48,7 +56,5 @@ const mapDispatchToProps = (dispatch)=> {
     loadSession: ()=> dispatch(setSession())
   }
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(_App);
